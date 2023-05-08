@@ -3,8 +3,14 @@ const fs = require('fs');
 const copyFrom = path.join(__dirname, 'files');
 const copyTo = path.join(__dirname, 'files-copy');
 
+const copyFiles = (copyTo) => {
+  fs.rm(copyTo, { recursive: true }, () => {
+    copyDirectory(copyFrom, copyTo);
+  });
+};
+
 const copyDirectory = (copyFrom, copyTo) => {
-  fs.mkdir(copyTo,{ recursive: true }, (err) => {
+  fs.mkdir(copyTo, { recursive: true }, (err) => {
     if (err) throw err;
   });
 
@@ -18,8 +24,8 @@ const copyDirectory = (copyFrom, copyTo) => {
           console.log(err);
         }
         if (stats.isDirectory()) {
-         copyDirectory(path.join(copyFrom, file), path.join(copyTo, file));
-         return;
+          copyDirectory(path.join(copyFrom, file), path.join(copyTo, file));
+          return;
         }
         fs.copyFile(
           path.join(copyFrom, file),
@@ -34,4 +40,4 @@ const copyDirectory = (copyFrom, copyTo) => {
     });
   });
 };
-copyDirectory(copyFrom, copyTo);
+copyFiles(copyTo);
