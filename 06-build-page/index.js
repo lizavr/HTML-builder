@@ -96,6 +96,12 @@ fs.readdir(path.join(__dirname, folder), (err, files) => {
 const copyFrom = path.join(__dirname, 'assets');
 const copyTo = path.join(__dirname, 'project-dist', 'assets');
 
+const copyFiles = (copyTo) => {
+  fs.rm(copyTo, { recursive: true }, () => {
+    copyDirectory(copyFrom, copyTo);
+  });
+};
+
 const copyDirectory = (copyFrom, copyTo) => {
   fs.mkdir(copyTo, { recursive: true }, (err) => {
     if (err) throw err;
@@ -127,4 +133,4 @@ const copyDirectory = (copyFrom, copyTo) => {
     });
   });
 };
-copyDirectory(copyFrom, copyTo);
+copyFiles(copyTo);
