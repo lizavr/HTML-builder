@@ -57,7 +57,7 @@ readStreamInd.on('end', () => {
           if (arrComp.length === files.length) {
             arrComp.forEach(
               (item) =>
-                (indexHtml = indexHtml.replace(`{{${item}}}`, obj[item]))
+                (indexHtml = indexHtml.replaceAll(`{{${item}}}`, obj[item]))
             );
             fs.writeFile(finalIndex, indexHtml, (err) => {
               if (err) throw err;
