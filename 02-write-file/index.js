@@ -8,7 +8,7 @@ fs.writeFile(way, '', (err) => {
 });
 stdout.write('please, enter your text\n');
 stdin.on('data', (data) => {
-  if (data.toString().slice(0,-2) !== 'exit') {
+  if (data.toString().slice(0, -2) !== 'exit') {
     const a = data.toString();
     fs.appendFile(way, a, (err) => {
       if (err) throw err;
@@ -17,6 +17,11 @@ stdin.on('data', (data) => {
     process.exit();
   }
 });
+
+process.on('SIGINT', () => {
+  process.exit();
+});
+
 process.on('exit', () => {
-  stdout.write(`buy`);
+  stdout.write(`bye`);
 });
